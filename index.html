@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <!-- <script src='main.js'></script> -->
+</head>
+<body>
+
+    <!-- Table -->
+    <table class="table table-bordered">
+        <thead id="tbl">
+          <tr>
+            <!-- <th scope="col">#</th> -->
+            <th scope="col">Token Id</th>
+            <th scope="col">Toy Id</th>
+            
+          </tr>
+        </thead>
+      
+          <!-- output -->
+        <tbody id="result">
+      </table>
+
+        <!-- pagination -->  
+        <span class="float-right">
+        <a href="javascript:prevPage()"  class="btn btn-primary" id="btn_prev">Prev</a>
+         &nbsp;&nbsp;&nbsp;
+        <a href="javascript:nextPage()"  class="btn btn-primary" id="btn_next">Next</a>
+        </span>
+        
+        Page: <span id="page" class="badge badge-pill badge-info"></span>
+          </div>
+      
+      
+
+
+
+
+
+
+
+
+
+
+    <script>
+    var json_data_obj = [
+	{
+		color: "red",
+		value: "#f00"
+	},
+	{
+		color: "green",
+		value: "#0f0"
+	},
+	{
+		color: "blue",
+		value: "#00f"
+	},
+	{
+		color: "cyan",
+		value: "#0ff"
+	},
+	{
+		color: "magenta",
+		value: "#f0f"
+	},
+	{
+		color: "yellow",
+		value: "#ff0"
+	},
+	{
+		color: "black",
+		value: "#000"
+	}
+];
+// -------------------------- Pagination -----------------------
+var current_page = 1;
+        var records_per_page = 3;
+ 
+        function prevPage()
+        {
+            if (current_page > 1) {
+                current_page--;
+                json_table_template(json_data_obj, current_page);
+                 
+            }
+        }
+       // let lastname = localStorage.getItem(key);
+        function nextPage()
+        {
+         // console.log("nxt",json_data_obj);
+
+            if (current_page < numPages(json_data_obj)) {
+                current_page++;
+                console.log(current_page)
+                json_table_template(json_data_obj, current_page);
+                 
+            }
+        }
+    //    console.log(json_data_obj[0]['color']); 
+       json_table_template(json_data_obj,1);
+
+       function json_table_template(json_data_obj, page)
+        {
+          var btn_next = document.getElementById("btn_next");
+          var btn_prev = document.getElementById("btn_prev");
+          // var listing_table = document.getElementById("listingTable");
+          var page_span = document.getElementById("page");
+
+        // Validate page
+            if (page < 1) page = 1;
+            if (page > numPages(json_data_obj)) page = numPages(json_data_obj);
+
+            var htmlTemp = "";
+            if(records_per_page > json_data_obj.length){
+
+                for(let i=(page-1)*records_per_page; i < json_data_obj.length; i++)
+                {
+                    console.log(json_data_obj[i]['color']);  
+                    htmlTemp += "<tr><td>"+json_data_obj[i]['color']+"</td>"; 
+                    htmlTemp += "<td>"+json_data_obj[i]['value']+"</td>";     
+                }
+            }else{
+            for(let i=(page-1)*records_per_page; i < (page * records_per_page) && json_data_obj.length; i++)
+            {           
+            
+                    console.log([i]);  
+                    console.log(json_data_obj[i]['color']);  
+                    htmlTemp += "<tr><td>"+json_data_obj[i]['color']+"</td>"; 
+                    htmlTemp += "<td>"+json_data_obj[i]['value']+"</td>";                 
+            }            
+        }
+        
+            document.getElementById("result").innerHTML = htmlTemp;
+
+            page_span.innerHTML = page + " / " + numPages(json_data_obj);
+
+            if (page == 1) {
+                btn_prev.style.visibility = "hidden";
+            } else {
+                btn_prev.style.visibility = "visible";
+            }
+
+            if (page == numPages(json_data_obj)) {
+                btn_next.style.visibility = "hidden";
+            } else {
+                btn_next.style.visibility = "visible";
+            }
+        }
+        
+        function numPages(json_data_obj)
+        {
+          //console.log(json_data_obj)
+          //console.log("pg_num", Object.keys(json_data_obj).length);
+            return Math.ceil(Object.keys(json_data_obj).length / (records_per_page));
+        }
+    </script>
+</body>
+</html>
