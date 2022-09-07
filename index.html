@@ -64,7 +64,15 @@
 	{
 		color: "black",
 		value: "#000"
-	}
+	},
+    // {
+	// 	color: "gray",
+	// 	value: "#000"
+	// },
+    // {
+	// 	color: "white",
+	// 	value: "#000"
+	// }
 ];
 // -------------------------- Pagination -----------------------
 var current_page = 1;
@@ -105,11 +113,12 @@ var current_page = 1;
             if (page > numPages(json_data_obj)) page = numPages(json_data_obj);
 
             var htmlTemp = "";
+            
             if(records_per_page > json_data_obj.length){
 
                 for(let i=(page-1)*records_per_page; i < json_data_obj.length; i++)
                 {
-                    console.log(json_data_obj[i]['color']);  
+                    console.log(json_data_obj.length);  
                     htmlTemp += "<tr><td>"+json_data_obj[i]['color']+"</td>"; 
                     htmlTemp += "<td>"+json_data_obj[i]['value']+"</td>";     
                 }
@@ -117,7 +126,7 @@ var current_page = 1;
             for(let i=(page-1)*records_per_page; i < (page * records_per_page) && json_data_obj.length; i++)
             {           
             
-                    console.log([i]);  
+                    console.log([i]);  console.log(json_data_obj.length);  
                     console.log(json_data_obj[i]['color']);  
                     htmlTemp += "<tr><td>"+json_data_obj[i]['color']+"</td>"; 
                     htmlTemp += "<td>"+json_data_obj[i]['value']+"</td>";                 
@@ -145,7 +154,8 @@ var current_page = 1;
         {
           //console.log(json_data_obj)
           //console.log("pg_num", Object.keys(json_data_obj).length);
-            return Math.ceil(Object.keys(json_data_obj).length / (records_per_page));
+          let objLength = Object.keys(json_data_obj).length; 
+            return Math.ceil(objLength / (records_per_page));
         }
     </script>
 </body>

@@ -15,3 +15,6 @@ table {
   #page{
     font-size: 1em;
  }
+ .float-right{
+  float: right;
+ }
